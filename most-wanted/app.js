@@ -1,7 +1,7 @@
 "use strict"
 
 function app(peopleArray) {
-  let searchType = promptFor("Enter the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   switch (searchType) {
     case 'yes':
@@ -34,7 +34,7 @@ function infoLookUpTool(person) {
     console.log("No Parents found")
   }
   else if (person.parents[0] !== null && person.parents[1] == null)
-    console.log("One parent found. Parent:" + person.parents[0])
+    console.log("Found a parent. Parent:" + person.parents[0])
   else {
     console.log("Parent 1: " + person.parents[0], "Parent 2: " + person.parents[1]);
   }
@@ -96,3 +96,160 @@ for(let i =0; i < children.length; i++){
   return children;
 }  
 
+function mainMenu(person, peopleArray) {
+
+  if (!person) {
+    alert("Could not find that individual.");
+    return app(peopleArray); 
+  }
+
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + "\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or 'restart' or 'quit'");
+
+  switch (displayOption) {
+    case "info":
+      infoLookUpTool(person);
+      break;
+    case "family":
+      getSpouse(person, peopleArray);
+      getParents(person, peopleArray);
+      break;
+    case "descendants":
+      let descendants = getDescendants(person,peopleArray);
+      console.log(descendants);
+      break;
+    case "restart":
+      app(peopleArray); 
+      break;
+    case "quit":
+      return; 
+    default:
+      return mainMenu(person, peopleArray); 
+  }
+}
+
+//be able to search by name not using correct letter casing
+
+function searchByName(peopleArray) {
+  let firstName = promptFor("What is the person's first name?", chars);
+  let lastName= promptFor("What is the person's last name?", chars);
+  let foundPerson = peopleArray.filter(function (person) {
+    if (person.firstName === firstName && person.lastName === lastName) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  return foundPerson[0];
+}
+
+function displaypeopleArray(peopleArray) {
+  alert(peopleArray.map(function (person) {
+    return person.firstName + " " + person.lastName;
+  }).join("\n"));
+}
+
+function displayPerson(person) {
+  let personInfo = "First Name: " + person.firstName + "\n";
+  personInfo += "Last Name: " + person.lastName + "\n";
+  alert(personInfo);
+}
+
+function promptFor(question, valid) {
+  do {
+    var response = prompt(question).trim();
+  } while (!response || !valid(response));
+  return response;
+}
+
+function yesNo(input) {
+  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+function chars(input) {
+  return true; 
+}
+
+function searchByWeight(peopleArray) {            
+  let weight = promptFor("What is the person's weight?", chars);
+  let foundByWeight = peopleArray.filter(function (person) {             
+    if (person.weight == weight) {;
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundByWeight);
+  return foundByWeight;
+}
+
+function searchByHeight(peopleArray) {
+  let height = promptFor("What is the person's height?", chars);
+  let foundByHeight = peopleArray.filter(function (person) {
+    if (person.height == height) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundByHeight);
+  return foundByHeight;
+}
+
+function searchByEyeColor(peopleArray) {
+  let eyecolor = promptFor("What is the person's eye color?", chars);
+  let foundByEyeColor = peopleArray.filter(function (person) {
+    if (person.eyeColor == eyecolor) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundByEyeColor);
+  return foundByEyeColor;
+}
+
+function searchByGender(peopleArray) {
+  let gender = promptFor("What is the person's gender?", chars);
+  let foundByGender =  peopleArray.filter(function (person) {
+    if (person.gender == gender) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  })
+  console.log(foundByGender);
+  // let userAnswer = prompt("is the person you're looking for in this list?","Yes or No")
+  // if(userAnswer == 'Yes'){
+  //   let enterName = prompt("Enter their name")
+  //   displayPerson(userAnswer);
+  
+  return foundByGender;
+}
+
+function searchByTraits(peopleArray) {
+  let yourChoice = prompt("What trait would you like to search by?", "Eye color, weight, height, or gender");
+  let askAgain = false;
+  let arr = peopleArray;
+  while (arr.length > 1) {
+    if (askAgain == true) {
+      yourChoice = prompt(arr.length + " Matches Found! What trait would you like to search by for these cases?");
+      
+    }
+    askAgain = true;
+    if (yourChoice == "weight" ||yourChoice == "Weight") {
+      arr = searchByWeight(arr); 
+    } else if (yourChoice === "height" || yourChoice == "Height") {
+      arr = searchByHeight(arr);
+    } else if (yourChoice === "eyecolor" ||yourChoice == "eye color" || yourChoice == "Eye Color" || yourChoice =="Eye color") {
+      arr = searchByEyeColor(arr);     
+    } else if (yourChoice === "gender" || yourChoice == "Gender") {
+      arr = searchByGender(arr);   
+    }
+  }
+  return arr[0];
+}
