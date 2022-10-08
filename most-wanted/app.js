@@ -127,7 +127,7 @@ function mainMenu(person, peopleArray) {
   }
 }
 
-//be able to search by name not using correct letter casing
+//search no matter what case they use in the entry
 
 function searchByName(peopleArray) {
   let firstName = promptFor("What is the person's first name?", chars);
