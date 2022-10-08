@@ -1,47 +1,22 @@
-/*
-    Author: devCodeCamp
-    Description: Most Wanted Starter Code
-*/
-//////////////////////////////////////////* Beginning Of Starter Code *//////////////////////////////////////////
+"use strict"
 
-"use strict";
-//? Utilize the hotkey to hide block level comment documentation
-////* Mac: Press "CMD"+"K" and then "CMD"+"/"
-////* PC: Press "CTRL"+"K" and then "CTRL"+"/"
-
-/**
- * This is the main logic function being called in index.html.
- * It operates as the entry point for our entire application and allows
- * our user to decide whether to search by name or by traits.
- * @param {Array} people        A collection of person objects.
- */
-function app(people) {
-    // promptFor() is a custom function defined below that helps us prompt and validate input more easily
-    // Note that we are chaining the .toLowerCase() immediately after the promptFor returns its value
-    let searchType = promptFor(
-        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
-        yesNo
-    ).toLowerCase();
-    let searchResults;
-    // Routes our application based on the user's input
-    switch (searchType) {
-        case "yes":
-            searchResults = searchByName(people);
-            break;
-        case "no":
-            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
-                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
-            break;
-        default:
-            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
-            app(people);
-            break;
-    }
-    // Calls the mainMenu() only AFTER we find the SINGLE PERSON
-    mainMenu(searchResults, people);
+function app(peopleArray) {
+  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchResults;
+  switch (searchType) {
+    case 'yes':
+      searchResults = searchByName(peopleArray);
+      mainMenu(searchResults, peopleArray);
+      break;
+    case 'no':
+      searchResults = searchByTraits(peopleArray); 
+      mainMenu(searchResults, peopleArray);
+      break;
+    default:
+      app(peopleArray); 
+      break;
+  }
 }
-// End of app()
 
 /**
  * After finding a single person, we pass in the entire person-object that we found,
