@@ -127,11 +127,11 @@ function mainMenu(person, peopleArray) {
   }
 }
 
-//search no matter what case they use in the entry
+//make not dependent on case
 
 function searchByName(peopleArray) {
-  let firstName = promptFor("What is the person's first name?", chars);
-  let lastName= promptFor("What is the person's last name?", chars);
+  let firstName = promptFor("What's the person's first name?", chars);
+  let lastName= promptFor("What's the person's last name?", chars);
   let foundPerson = peopleArray.filter(function (person) {
     if (person.firstName === firstName && person.lastName === lastName) {
       return true;
@@ -171,7 +171,7 @@ function chars(input) {
 }
 
 function searchByWeight(peopleArray) {            
-  let weight = promptFor("What is the person's weight?", chars);
+  let weight = promptFor("What's the person's weight?", chars);
   let foundByWeight = peopleArray.filter(function (person) {             
     if (person.weight == weight) {;
       return true;
@@ -185,7 +185,7 @@ function searchByWeight(peopleArray) {
 }
 
 function searchByHeight(peopleArray) {
-  let height = promptFor("What is the person's height?", chars);
+  let height = promptFor("What's the person's height?", chars);
   let foundByHeight = peopleArray.filter(function (person) {
     if (person.height == height) {
       return true;
@@ -199,7 +199,7 @@ function searchByHeight(peopleArray) {
 }
 
 function searchByEyeColor(peopleArray) {
-  let eyecolor = promptFor("What is the person's eye color?", chars);
+  let eyecolor = promptFor("What's the person's eye color?", chars);
   let foundByEyeColor = peopleArray.filter(function (person) {
     if (person.eyeColor == eyecolor) {
       return true;
@@ -213,7 +213,7 @@ function searchByEyeColor(peopleArray) {
 }
 
 function searchByGender(peopleArray) {
-  let gender = promptFor("What is the person's gender?", chars);
+  let gender = promptFor("What's the person's gender?", chars);
   let foundByGender =  peopleArray.filter(function (person) {
     if (person.gender == gender) {
       return true;
@@ -223,7 +223,7 @@ function searchByGender(peopleArray) {
     }
   })
   console.log(foundByGender);
-  // let userAnswer = prompt("is the person you're looking for in this list?","Yes or No")
+  // let userAnswer = prompt("Is the person you're looking for in this list?","Yes or No")
   // if(userAnswer == 'Yes'){
   //   let enterName = prompt("Enter their name")
   //   displayPerson(userAnswer);
